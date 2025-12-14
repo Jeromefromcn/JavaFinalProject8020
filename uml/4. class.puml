@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/class-diagram
+left to right direction
+
+package Interfaces {
+    class InventoryController
+}
+
+package Application {
+    interface InventoryApplicationService
+    class InventoryApplicationServiceImpl
+}
+
+package Domain {
+    interface InventoryDomainService
+    class InventoryDomainServiceImpl
+    abstract Basic
+    class Inventory
+    class InventoryChangeRecord
+    interface InventoryRepository
+}
+
+package Infrastructure {
+    class InventoryRepositoryImpl
+}
+
+InventoryController --> InventoryApplicationService
+InventoryApplicationServiceImpl ..|> InventoryApplicationService
+InventoryApplicationServiceImpl --> InventoryDomainService
+InventoryApplicationServiceImpl --> Inventory
+InventoryDomainServiceImpl ..|> InventoryDomainService
+InventoryDomainService --> Inventory
+InventoryDomainServiceImpl --> Inventory
+InventoryDomainServiceImpl --> InventoryRepository
+InventoryRepositoryImpl ..|> InventoryRepository
+Inventory --|> Basic
+InventoryChangeRecord --|> Basic
+@enduml

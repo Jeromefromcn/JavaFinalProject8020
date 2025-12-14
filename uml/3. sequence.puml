@@ -1,0 +1,140 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Staff" as staff
+actor "Customer" as cus
+actor "Scheduler" as sch
+participant "MessageConsumer" as mc
+participant Service as ser
+participant Repository as rep
+database Database as db
+queue MessageBroker as ms
+participant OuterServiceProxy as proxy
+
+== Sku management ==
+opt modify sku
+    staff -> ser: query sku
+    activate ser
+    ser --> staff: stu info
+    deactivate
+end
+
+staff -> ser: save sku
+activate ser
+    ser -> rep: save sku
+    activate rep
+        rep -> db: db op
+        activate db
+        db --> rep: return
+        deactivate db
+    rep --> ser: return
+ser -> staff: return
+deactivate ser
+
+== Purchase ==
+
+cus -> ser: purchase goods
+activate ser
+ser -> ser: check if inventory enough
+    activate ser
+    deactivate ser
+alt shelf enough
+    ser -> rep: deduct from shelf
+    activate rep
+        rep -> db: db op
+        activate db
+        db --> rep: return
+        deactivate db
+    rep --> ser: return
+    deactivate rep
+    ser --> cus: return
+else warehouse enough
+    ser -> rep: deduct from shelf and warehouse
+    activate rep
+        rep -> db: db op
+        activate db
+        db --> rep: return
+        deactivate db
+    rep --> ser: return
+    deactivate rep
+    ser --> cus: return
+else no enough inventory
+    ser --> cus: purchase failure
+end
+deactivate ser
+
+== Inventory inspection ==
+
+sch -> ser: run inventory inspection
+activate ser
+    ser -> db: query inventory and sku info
+    activate db
+    db --> ser: return info
+    deactivate db
+    loop all inventory
+        opt lower than threshold
+            ser -> ms: send replenishment message\n(shelf or warehouse)
+            activate ms
+            ms --> ser: ack
+            deactivate ms
+        end
+    end
+    deactivate ser
+
+== Replenishment ==
+
+ms -> mc: push replenishment message
+activate mc
+    alt shelf replenishment
+        mc -> ser: shelf replenishment
+        activate ser
+            ser -> proxy: send shelf replenishment \n SMS message to staff
+            activate proxy
+            proxy --> ser: success
+            deactivate proxy
+        ser --> mc: success
+        deactivate ser
+    else warehouse replenishment
+        mc -> ser: warehouse replenishment
+        activate ser
+            ser -> proxy: order goods from supplier system interface
+            activate proxy
+            proxy --> ser: success
+            deactivate proxy
+        ser --> mc: success
+        deactivate ser
+    end
+mc --> ms: ACK
+deactivate mc
+
+staff -> ser: stock in
+note right
+after receiving the goods ordered from supplier
+end note
+activate ser
+    ser -> rep: add warehouse inventory
+    activate rep
+        rep -> db: db op
+        activate db
+        db --> rep: return
+        deactivate db
+    rep --> ser: return
+    deactivate rep
+ser --> staff: return
+deactivate ser
+
+staff -> ser: stock the shelves
+activate ser
+    ser -> rep: deduct warehouse inventory \n and add shelf inventory
+    activate rep
+        rep -> db: db op
+        activate db
+        db --> rep: return
+        deactivate db
+    rep --> ser: return
+    deactivate rep
+ser --> staff: return
+deactivate ser
+@enduml

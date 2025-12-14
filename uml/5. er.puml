@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/class-diagram
+left to right direction
+
+entity sku {
+    id
+    code
+    name
+    description
+    maximum_shelf_inventory
+    minimum_shelf_inventory
+    maximum_warehouse_inventory
+    minimum_warehouse_inventory
+    created_at
+}
+
+entity inventory {
+    id
+    sku_id
+    type
+    quantity
+}
+
+entity inventory_change_record {
+    id
+    inventory_id
+    inventory_type
+    operation_type
+    quantity
+    previous_quantity
+    new_quantity
+    operation_time
+    notes
+}
+
+inventory --> sku
+inventory_change_record --> inventory
+@enduml

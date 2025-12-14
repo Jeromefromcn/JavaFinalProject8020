@@ -1,0 +1,126 @@
+@startuml staff
+'https://plantuml.com/activity-diagram-beta
+
+start
+    note right
+    maintain sku
+    end note
+if (modify sku) then (true)
+    :query sku;
+else (false)
+endif
+
+:manage sku info;
+:save sku info;
+stop
+
+start
+    note right
+    task stock
+    end note
+if (check shelf) then (true)
+    :get shelf inventory detail;
+else (false)
+    :get warehouse inventory detail;
+endif
+:take stock offline by inventory detail;
+stop
+
+start
+    note right
+    stock in
+    end note
+:accept goods from supplier;
+:move goods to the warehouse;
+:operate the take in operation;
+stop
+
+start
+    note right
+    stock the shelves
+    end note
+:move goos from warehouse to the shelves;
+:operate the stock shelves operation;
+stop
+@enduml
+
+@enduml
+
+@startuml customer
+'https://plantuml.com/activity-diagram-beta
+
+start
+    note right
+    purchase
+    end note
+:purchase goods;
+if (shelf enough) then (true)
+    :deduct inventory from shelf;
+    stop
+else (false)
+    if (warehouse enough) then (true)
+        :deduct inventory from shelf;
+        :deduct inventory from warehouse;
+        stop
+    else (false)
+        :purchase failed;
+        stop
+    endif
+endif
+
+start
+    note right
+    refund
+    end note
+:refund goods;
+:add inventory back to warehouse;
+stop
+@enduml
+
+@startuml scheduler
+'https://plantuml.com/activity-diagram-beta
+
+start
+    note right
+    inventory inspection
+    end note
+:schedule job;
+:query all shelf inventory details;
+if (quantity of sku lower than threshold) then (true)
+    :send shelf replenishment message;
+else (false)
+endif
+:query all warehouse inventory details;
+if (quantity of sku lower than threshold) then (true)
+    :send warehouse replenishment message;
+else (false)
+endif
+
+stop
+
+@enduml
+
+@startuml message consumer
+'https://plantuml.com/activity-diagram-beta
+
+start
+    note right
+    replenishment
+    end note
+:receive replenishment message;
+if (shelf) then (true)
+    :calculate shelf difference;
+    note right: between current shelf \n quantity to maximum shelf quantity
+    :move goods;
+    note right: from warehouse to shelf
+else (false)
+    :calculate warehouse difference;
+    note right: between current warehouse \n quantity to maximum warehouse quantity;
+    :order goods;
+    note right: from supplier
+endif
+stop
+
+@enduml
+
+
