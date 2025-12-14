@@ -11,6 +11,5 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class Basic {
-
     private Long id;
 }
