@@ -4,24 +4,32 @@ left to right direction
 
 package Interfaces {
     class InventoryController
+    class SkuController
 }
 
 package Application {
     interface InventoryApplicationService
     class InventoryApplicationServiceImpl
+    interface SkuApplicationService
+    class SkuApplicationServiceImpl
 }
 
 package Domain {
     interface InventoryDomainService
     class InventoryDomainServiceImpl
+    interface SkuDomainService
+    class SkuDomainServiceImpl
     abstract Basic
     class Inventory
     class InventoryChangeRecord
     interface InventoryRepository
+    class Sku
+    interface SkuRepository
 }
 
 package Infrastructure {
     class InventoryRepositoryImpl
+    class SkuRepositoryImpl
 }
 
 InventoryController --> InventoryApplicationService
@@ -35,4 +43,15 @@ InventoryDomainServiceImpl --> InventoryRepository
 InventoryRepositoryImpl ..|> InventoryRepository
 Inventory --|> Basic
 InventoryChangeRecord --|> Basic
+
+SkuController --> SkuApplicationService
+SkuApplicationServiceImpl ..|> SkuApplicationService
+SkuApplicationServiceImpl --> SkuDomainService
+SkuApplicationServiceImpl --> Sku
+SkuDomainServiceImpl ..|> SkuDomainService
+SkuDomainService --> Sku
+SkuDomainServiceImpl --> Sku
+SkuDomainServiceImpl --> SkuRepository
+SkuRepositoryImpl ..|> SkuRepository
+Sku --|> Basic
 @enduml
