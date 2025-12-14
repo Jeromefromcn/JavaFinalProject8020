@@ -28,7 +28,6 @@ entity inventory_change_record {
     id
     inventory_id
     operation_type
-    quantity
     previous_quantity
     new_quantity
     created_at

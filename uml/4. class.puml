@@ -19,11 +19,40 @@ package Domain {
     class InventoryDomainServiceImpl
     interface SkuDomainService
     class SkuDomainServiceImpl
-    abstract Basic
-    class Inventory
-    class InventoryChangeRecord
+    abstract Basic {
+        private Long id;
+    }
+    class Inventory {
+        private Long skuId;
+        private InventoryType type;
+        private Long quantity;
+        private List<Long> changeRecords;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+    }
+    class InventoryChangeRecord {
+        private Long inventoryId;
+        private OperationType operationType;
+        private Long previousQuantity;
+        private Long newQuantity;
+        private LocalDateTime createdAt;
+        private String notes;
+    }
     interface InventoryRepository
-    class Sku
+    class Sku {
+        private String code;
+        private String name;
+        private String description;
+        private InventoryRule inventoryRule;
+        private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+    }
+    class InventoryRule {
+        private Integer maximumOnShelf;
+        private Integer minimumOnShelf;
+        private Integer maximumInWarehouse;
+        private Integer minimumInWarehouse;
+    }
     interface SkuRepository
 }
 
@@ -54,4 +83,5 @@ SkuDomainServiceImpl --> Sku
 SkuDomainServiceImpl --> SkuRepository
 SkuRepositoryImpl ..|> SkuRepository
 Sku --|> Basic
+Sku --> InventoryRule
 @enduml
