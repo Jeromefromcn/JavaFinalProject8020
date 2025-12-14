@@ -7,11 +7,12 @@ entity sku {
     code
     name
     description
-    maximum_shelf_inventory
-    minimum_shelf_inventory
-    maximum_warehouse_inventory
-    minimum_warehouse_inventory
+    maximum_on_shelf
+    minimum_on_shelf
+    maximum_in_warehouse
+    minimum_in_warehouse
     created_at
+    updated_at
 }
 
 entity inventory {
@@ -19,17 +20,18 @@ entity inventory {
     sku_id
     type
     quantity
+    created_at
+    updated_at
 }
 
 entity inventory_change_record {
     id
     inventory_id
-    inventory_type
     operation_type
     quantity
     previous_quantity
     new_quantity
-    operation_time
+    created_at
     notes
 }
 
