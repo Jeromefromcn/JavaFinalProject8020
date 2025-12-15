@@ -8,11 +8,11 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface InventoryChangeRecordPersistenceAssembler {
-    InventoryChangeRecordPO toPo(InventoryChangeRecord object);
+    InventoryChangeRecordPO assemblePo(InventoryChangeRecord object);
 
-    InventoryChangeRecord toAggregate(InventoryChangeRecordPO object);
+    InventoryChangeRecord assembleAggregate(InventoryChangeRecordPO object);
 
-    List<InventoryChangeRecordPO> toPoList(List<InventoryChangeRecord> objectList);
+    List<InventoryChangeRecordPO> assemblePoList(List<InventoryChangeRecord> objectList);
 
-    List<InventoryChangeRecord> toAggregateList(List<InventoryChangeRecordPO> objectList);
+    List<InventoryChangeRecord> assembleAggregateList(List<InventoryChangeRecordPO> objectList);
 }

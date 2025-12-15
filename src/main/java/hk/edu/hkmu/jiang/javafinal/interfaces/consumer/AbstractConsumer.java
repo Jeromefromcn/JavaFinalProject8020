@@ -10,7 +10,11 @@ public abstract class AbstractConsumer implements MessageListener {
 
     public void onMessage(Message message, byte @NotNull [] pattern) {
         String body = new String(message.getBody());
-        receiveMessage(body);
+        try {
+            receiveMessage(body);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
     }
 
     protected abstract void receiveMessage(String message);

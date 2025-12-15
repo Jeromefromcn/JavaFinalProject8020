@@ -19,7 +19,8 @@ CREATE TABLE inventory
     type       VARCHAR(20) NOT NULL CHECK (type IN ('SHELF', 'WAREHOUSE')),
     quantity   INTEGER     NOT NULL DEFAULT 0,
     created_at TIMESTAMP            DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP            DEFAULT CURRENT_TIMESTAMP
+    updated_at TIMESTAMP            DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uk_inventory_sku_type UNIQUE (sku_id, type)
 );
 
 CREATE TABLE inventory_change_record

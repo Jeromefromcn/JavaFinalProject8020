@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -18,7 +20,12 @@ public class MessageSendingProxyImpl implements MessageSendingProxy {
 
     @Override
     public void sendMessage(String topic, String message) {
-        redisTemplate.convertAndSend(topic, message);
+        byte[] topicBytes = topic.getBytes();
+        byte[] messageBytes = message.getBytes();
+
+        Objects.requireNonNull(redisTemplate.getConnectionFactory())
+                .getConnection()
+                .publish(topicBytes, messageBytes);
         log.info("Sent Message: {} to topic: [{}]", message, topic);
     }
 }

@@ -17,8 +17,8 @@ package Application {
 package Domain {
     interface InventoryDomainService
     class InventoryDomainServiceImpl
-    interface SkuDomainService
-    class SkuDomainServiceImpl
+'    interface SkuDomainService
+'    class SkuDomainServiceImpl
     abstract Basic {
         private Long id;
     }
@@ -26,7 +26,7 @@ package Domain {
         private Long skuId;
         private InventoryType type;
         private Long quantity;
-        private List<Long> changeRecords;
+        private List<InventoryChangeRecord> changeRecords;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
     }
@@ -75,12 +75,12 @@ InventoryChangeRecord --|> Basic
 
 SkuController --> SkuApplicationService
 SkuApplicationServiceImpl ..|> SkuApplicationService
-SkuApplicationServiceImpl --> SkuDomainService
+'SkuApplicationServiceImpl --> SkuDomainService
 SkuApplicationServiceImpl --> Sku
-SkuDomainServiceImpl ..|> SkuDomainService
-SkuDomainService --> Sku
-SkuDomainServiceImpl --> Sku
-SkuDomainServiceImpl --> SkuRepository
+'SkuDomainServiceImpl ..|> SkuDomainService
+'SkuDomainService --> Sku
+'SkuDomainServiceImpl --> Sku
+'SkuDomainServiceImpl --> SkuRepository
 SkuRepositoryImpl ..|> SkuRepository
 Sku --|> Basic
 Sku --> InventoryRule

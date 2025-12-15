@@ -18,7 +18,11 @@ public class Inventory extends Basic {
     private Long skuId;
     private InventoryType type;
     private Long quantity;
-    private List<Long> changeRecords;
+    private List<InventoryChangeRecord> changeRecords;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public void initQuantity() {
+        quantity = 0L;
+    }
 }

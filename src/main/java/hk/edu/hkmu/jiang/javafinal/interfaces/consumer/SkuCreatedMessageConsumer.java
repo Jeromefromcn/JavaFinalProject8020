@@ -1,6 +1,8 @@
 package hk.edu.hkmu.jiang.javafinal.interfaces.consumer;
 
+import hk.edu.hkmu.jiang.javafinal.application.dto.SkuDTO;
 import hk.edu.hkmu.jiang.javafinal.application.service.InventoryApplicationService;
+import hk.edu.hkmu.jiang.javafinal.common.util.GsonUtil;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +27,7 @@ public class SkuCreatedMessageConsumer extends AbstractConsumer implements Messa
     @Override
     public void receiveMessage(String message) {
         log.info("receive topic: [{}] message : {}", getTopic(), message);
+        SkuDTO skuDTO = GsonUtil.getGson().fromJson(message, SkuDTO.class);
+        inventoryApplicationService.initInventory(skuDTO.getId());
     }
 }
