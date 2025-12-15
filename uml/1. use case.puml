@@ -13,11 +13,14 @@ actor "Staff" as sta
 (maintain sku) as maintain
     note right of maintain
     Create or modify sku. A sku include
-    information such as Code, Name, Price,
-    Maximum warehouse inventory,
-    Minimum warehouse Inventory,
-    Maximum shelf inventory,
-    Minimum shelf inventory and so on.
+    information such as Code, Name,
+    Maximum in warehouse,
+    Minimum in warehouse,
+    Maximum on shelf,
+    Minimum on shelf and so on.
+    After an sku is created,
+    a message is sent.
+
     end note
 (take stock) as tast
     note right of tast
@@ -25,8 +28,8 @@ actor "Staff" as sta
     shelf or warehouse
     to check the stock
     end note
-(stock in) as si
-    note right of si
+(stock the warehouse) as sw
+    note right of sw
     Get the goods ordered from supplier
     into warehouse.
     end note
@@ -38,7 +41,7 @@ actor "Staff" as sta
 sta --> query
 sta --> maintain
 sta --> tast
-sta --> si
+sta --> sw
 sta --> sts
 
 (purchase goods) as buy
@@ -83,7 +86,13 @@ sch --> auin
      to shelf when receiving the shelf
      replenishment message.
     end note
+(inventory initialization) as ii
+    note right of ii
+    Initialize shelf and warehouse inventories
+    after receiving the message.
+    end note
 
 mc --> stre
 mc --> shre
+mc --> ii
 @enduml

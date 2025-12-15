@@ -17,8 +17,7 @@ package Application {
 package Domain {
     [Domain service API] as dsa
     [Domain service impl] as dsi
-    [Domain aggregate] as de
-'    [Domain aggregate] as da
+    [Domain aggregate] as da
     [Repository API] as rea
 }
 
@@ -40,7 +39,7 @@ database "Redis" as redis{
 rest --> asa
 con --> asa
 wo --> asa
-asi --> de
+asi --> da
 asi --> dsa
 asi --> rea
 asi --> ospa
@@ -52,9 +51,8 @@ ospi ..|> ospa
 rei --> mysql
 rei --> redis
 
-rei --> de
+rei --> da
 
 dsi --> rea
-'asi --> da
 
 @enduml

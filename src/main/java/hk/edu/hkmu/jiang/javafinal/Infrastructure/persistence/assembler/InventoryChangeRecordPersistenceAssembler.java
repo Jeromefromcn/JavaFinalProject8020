@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface InventoryChangeRecordPoAssembler {
+public interface InventoryChangeRecordPersistenceAssembler {
     InventoryChangeRecordPO toPo(InventoryChangeRecord object);
 
     InventoryChangeRecord toAggregate(InventoryChangeRecordPO object);

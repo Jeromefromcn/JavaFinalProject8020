@@ -1,4 +1,4 @@
-package hk.edu.hkmu.jiang.javafinal.domain.shaired.aggregate;
+package hk.edu.hkmu.jiang.javafinal.application.dto;
 
 
 import lombok.AllArgsConstructor;
@@ -10,6 +10,6 @@ import lombok.experimental.SuperBuilder;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class Basic {
-    protected Long id;
+public abstract class BasicDTO {
+    private Long id;
 }

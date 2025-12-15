@@ -1,4 +1,4 @@
-package hk.edu.hkmu.jiang.javafinal.domain.sku.vo;
+package hk.edu.hkmu.jiang.javafinal.application.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class InventoryRule {
+public class ReplenishmentRuleDTO {
     private Integer maximumOnShelf;
     private Integer minimumOnShelf;
     private Integer maximumInWarehouse;
