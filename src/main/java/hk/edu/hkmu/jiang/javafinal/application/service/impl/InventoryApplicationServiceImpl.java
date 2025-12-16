@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -89,6 +90,42 @@ public class InventoryApplicationServiceImpl implements InventoryApplicationServ
                 Stream.concat(deductedShelfInventoryAndShortageMap.keySet().stream(),
                                 deductedWarehouseInventoryAndShortageMap.keySet().stream())
                         .toList());
+        return true;
+    }
+
+    @Override
+    public Boolean replenishWarehouse(Map<Long, Integer> skuIdQuantityMap) {
+        List<Long> skuIds = skuIdQuantityMap.keySet().stream().toList();
+        List<Inventory> inventories = inventoryRepository.queryBySkuIdsAndType(
+                skuIds, InventoryType.WAREHOUSE);
+        inventories.forEach(inventory -> {
+            Long skuId = inventory.getSkuId();
+            Integer quantity = skuIdQuantityMap.get(skuId);
+            inventory.add(quantity);
+        });
+        inventoryRepository.updateInventories(inventories);
+        return true;
+    }
+
+    @Override
+    public Boolean replenishShelf(Map<Long, Integer> skuIdQuantityMap) {
+        List<Long> skuIds = skuIdQuantityMap.keySet().stream().toList();
+        Map<Long, Inventory> skuIdShelfMap = inventoryRepository.queryBySkuIdsAndType(
+                        skuIds, InventoryType.SHELF).stream()
+                .collect(Collectors.toMap(Inventory::getSkuId, inventory -> inventory));
+        Map<Long, Inventory> skuIdWarehouseMap = inventoryRepository.queryBySkuIdsAndType(
+                        skuIds, InventoryType.WAREHOUSE).stream()
+                .collect(Collectors.toMap(Inventory::getSkuId, inventory -> inventory));
+        skuIds.forEach(skuId -> {
+            Integer quantity = skuIdQuantityMap.get(skuId);
+            Inventory warehouseInventory = skuIdWarehouseMap.get(skuId);
+            warehouseInventory.deduct(quantity);
+            Inventory shelfInventory = skuIdShelfMap.get(skuId);
+            shelfInventory.add(quantity);
+        });
+        inventoryRepository.updateInventories(Stream.concat(skuIdShelfMap.values().stream(),
+                        skuIdWarehouseMap.values().stream())
+                .toList());
         return true;
     }
 }

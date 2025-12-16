@@ -154,7 +154,7 @@ deactivate mc
 
 == Replenishment ==
 
-staff -> ser: stock the warehouse
+staff -> ser: replenish warehouse
 note right
 after receiving the goods ordered from supplier
 end note
@@ -170,7 +170,7 @@ activate ser
 ser --> staff: return
 deactivate ser
 
-staff -> ser: stock the shelves
+staff -> ser: replenish shelves
 activate ser
     ser -> rep: deduct warehouse inventory \n and add shelf inventory
     activate rep

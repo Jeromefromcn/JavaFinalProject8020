@@ -14,33 +14,33 @@ endif
 :save sku info;
 stop
 
-start
-    note right
-    task stock
-    end note
-if (check shelf) then (true)
-    :get shelf inventory detail;
-else (false)
-    :get warehouse inventory detail;
-endif
-:take stock offline by inventory detail;
-stop
+'start
+'    note right
+'    task stock
+'    end note
+'if (check shelf) then (true)
+'    :get shelf inventory detail;
+'else (false)
+'    :get warehouse inventory detail;
+'endif
+':take stock offline by inventory detail;
+'stop
 
 start
     note right
-    stock in
+    replenish warehouse
     end note
 :accept goods from supplier;
 :move goods to the warehouse;
-:operate the take in operation;
+:operate the replenishment operation;
 stop
 
 start
     note right
-    stock the shelves
+    replenish shelves
     end note
 :move goos from warehouse to the shelves;
-:operate the stock shelves operation;
+:operate the replenishment operation;
 stop
 @enduml
 
@@ -68,13 +68,13 @@ else (false)
     endif
 endif
 
-start
-    note right
-    refund
-    end note
-:refund goods;
-:add inventory back to warehouse;
-stop
+'start
+'    note right
+'    refund
+'    end note
+':refund goods;
+':add inventory back to warehouse;
+'stop
 @enduml
 
 @startuml scheduler
@@ -82,7 +82,7 @@ stop
 
 start
     note right
-    inventory inspection
+    shelf inventory inspection
     end note
 :schedule job;
 :query all shelf inventory details;
@@ -90,6 +90,12 @@ if (quantity of sku lower than threshold) then (true)
     :send shelf replenishment message;
 else (false)
 endif
+stop
+
+start
+    note right
+    warehouse inventory inspection
+    end note
 :query all warehouse inventory details;
 if (quantity of sku lower than threshold) then (true)
     :send warehouse replenishment message;

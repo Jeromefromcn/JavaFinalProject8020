@@ -28,9 +28,29 @@ public class InventoryController {
     @Loggable
     @PostMapping("/purchase")
     public BaseResponse<Boolean> purchase(@RequestBody Map<Long, Integer> skuIdDeductionMap) {
-        Boolean deductResult = inventoryApplicationService.deductInventory(skuIdDeductionMap);
+        Boolean deductionResult = inventoryApplicationService.deductInventory(skuIdDeductionMap);
         return BaseResponse.<Boolean>builder()
-                .message(deductResult)
+                .message(deductionResult)
+                .code(HttpStatus.OK.getReasonPhrase())
+                .build();
+    }
+
+    @Loggable
+    @PostMapping("/replenish_warehouse")
+    public BaseResponse<Boolean> replenishWarehouse(@RequestBody Map<Long, Integer> skuIdQuantityMap) {
+        Boolean replenishmentResult = inventoryApplicationService.replenishWarehouse(skuIdQuantityMap);
+        return BaseResponse.<Boolean>builder()
+                .message(replenishmentResult)
+                .code(HttpStatus.OK.getReasonPhrase())
+                .build();
+    }
+
+    @Loggable
+    @PostMapping("/replenish_shelf")
+    public BaseResponse<Boolean> replenishShelf(@RequestBody Map<Long, Integer> skuIdQuantityMap) {
+        Boolean replenishmentResult = inventoryApplicationService.replenishShelf(skuIdQuantityMap);
+        return BaseResponse.<Boolean>builder()
+                .message(replenishmentResult)
                 .code(HttpStatus.OK.getReasonPhrase())
                 .build();
     }

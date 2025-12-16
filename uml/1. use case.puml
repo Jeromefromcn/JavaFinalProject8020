@@ -20,27 +20,26 @@ actor "Staff" as sta
     Minimum on shelf and so on.
     After an sku is created,
     a message is sent.
-
     end note
-(take stock) as tast
-    note right of tast
-    Query sku details from
-    shelf or warehouse
-    to check the stock
-    end note
-(stock the warehouse) as sw
+'(take stock) as tast
+'    note right of tast
+'    Query sku details from
+'    shelf or warehouse
+'    to check the stock
+'    end note
+(replenish warehouse) as sw
     note right of sw
     Get the goods ordered from supplier
     into warehouse.
     end note
-(stock the shelves) as sts
+(replenish shelves) as sts
     note right of sts
     Move the goods from warehouse to shelves
     end note
 
 sta --> query
 sta --> maintain
-sta --> tast
+'sta --> tast
 sta --> sw
 sta --> sts
 
