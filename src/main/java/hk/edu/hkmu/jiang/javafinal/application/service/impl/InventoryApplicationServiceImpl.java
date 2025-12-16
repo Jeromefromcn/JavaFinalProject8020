@@ -94,6 +94,7 @@ public class InventoryApplicationServiceImpl implements InventoryApplicationServ
     }
 
     @Override
+    @Transactional
     public Boolean replenishWarehouse(Map<Long, Integer> skuIdQuantityMap) {
         List<Long> skuIds = skuIdQuantityMap.keySet().stream().toList();
         List<Inventory> inventories = inventoryRepository.queryBySkuIdsAndType(
@@ -108,6 +109,7 @@ public class InventoryApplicationServiceImpl implements InventoryApplicationServ
     }
 
     @Override
+    @Transactional
     public Boolean replenishShelf(Map<Long, Integer> skuIdQuantityMap) {
         List<Long> skuIds = skuIdQuantityMap.keySet().stream().toList();
         Map<Long, Inventory> skuIdShelfMap = inventoryRepository.queryBySkuIdsAndType(

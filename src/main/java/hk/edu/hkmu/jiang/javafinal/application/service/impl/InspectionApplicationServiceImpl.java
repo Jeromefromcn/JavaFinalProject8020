@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -45,6 +46,7 @@ public class InspectionApplicationServiceImpl implements InspectionApplicationSe
     private SupplierProxy supplierProxy;
 
     @Override
+    @Transactional
     public void inspect(InventoryType type) {
         List<Sku> skus = skuRepository.queryAll();
         List<Long> skuIds = skus.stream()
