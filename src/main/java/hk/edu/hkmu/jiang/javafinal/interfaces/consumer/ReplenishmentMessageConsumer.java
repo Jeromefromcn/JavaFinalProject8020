@@ -1,6 +1,8 @@
 package hk.edu.hkmu.jiang.javafinal.interfaces.consumer;
 
+import hk.edu.hkmu.jiang.javafinal.application.dto.ReplenishmentDTO;
 import hk.edu.hkmu.jiang.javafinal.application.service.InspectionApplicationService;
+import hk.edu.hkmu.jiang.javafinal.common.util.GsonUtil;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +27,7 @@ public class ReplenishmentMessageConsumer extends AbstractConsumer implements Me
     @Override
     public void receiveMessage(String message) {
         log.info("receive topic: [{}] message : {}", getTopic(), message);
-        inspectionApplicationService.initInventory(skuDTO.getId());
+        ReplenishmentDTO replenishmentDTO = GsonUtil.getGson().fromJson(message, ReplenishmentDTO.class);
+        inspectionApplicationService.notifyReplenishment(replenishmentDTO);
     }
 }

@@ -2,6 +2,8 @@ package hk.edu.hkmu.jiang.javafinal.application.service.impl;
 
 import hk.edu.hkmu.jiang.javafinal.application.dto.ReplenishmentDTO;
 import hk.edu.hkmu.jiang.javafinal.application.proxy.MessageSendingProxy;
+import hk.edu.hkmu.jiang.javafinal.application.proxy.SmsSendingProxy;
+import hk.edu.hkmu.jiang.javafinal.application.proxy.SupplierProxy;
 import hk.edu.hkmu.jiang.javafinal.application.service.InspectionApplicationService;
 import hk.edu.hkmu.jiang.javafinal.common.util.GsonUtil;
 import hk.edu.hkmu.jiang.javafinal.domain.inventory.aggregate.Inventory;
@@ -37,6 +39,10 @@ public class InspectionApplicationServiceImpl implements InspectionApplicationSe
     private MessageSendingProxy messageSendingProxy;
     @Value("${app.properties.topic.replenishment}")
     private String topicReplenishment;
+    @NonNull
+    private SmsSendingProxy smsSendingProxy;
+    @NonNull
+    private SupplierProxy supplierProxy;
 
     @Override
     public void inspect(InventoryType type) {
@@ -65,5 +71,17 @@ public class InspectionApplicationServiceImpl implements InspectionApplicationSe
             }
         });
 
+    }
+
+    @Override
+    public void notifyReplenishment(ReplenishmentDTO replenishmentDTO) {
+        if (replenishmentDTO == null) {
+            return;
+        }
+        if (InventoryType.SHELF.equals(replenishmentDTO.getType())) {
+            smsSendingProxy.sendSms(replenishmentDTO);
+        } else {
+            supplierProxy.orderGoods(replenishmentDTO);
+        }
     }
 }

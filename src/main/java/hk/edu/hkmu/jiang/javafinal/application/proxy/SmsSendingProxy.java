@@ -2,6 +2,7 @@ package hk.edu.hkmu.jiang.javafinal.application.proxy;
 
 import hk.edu.hkmu.jiang.javafinal.application.dto.ReplenishmentDTO;
 
-public interface SupplierProxy {
-    void orderGoods(ReplenishmentDTO replenishmentDTO);
+public interface SmsSendingProxy {
+
+    void sendSms(ReplenishmentDTO replenishmentDTO);
 }

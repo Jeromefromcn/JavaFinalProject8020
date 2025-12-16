@@ -15,7 +15,6 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.stream.IntStream;
 
 @Slf4j
 @Component
@@ -49,22 +48,39 @@ public class InitializePresetData {
                     InventoryPO.builder()
                             .type(InventoryType.WAREHOUSE)
                             .skuId(skuId)
-                            .quantity(100)
+                            .quantity(1000)
                             .build()
             );
         });
     }
 
     private void initSku() {
-        IntStream.range(0, 5).forEach(
-                i -> skuMapper.insert(SkuPO.builder()
-                        .code(i + "A")
-                        .name(i + "B")
-                        .description(i + "C")
-                        .maximumInWarehouse(i + 10)
-                        .minimumInWarehouse(i + 100)
-                        .maximumOnShelf(i)
-                        .minimumOnShelf(i + 10)
-                        .build()));
+        skuMapper.insert(SkuPO.builder()
+                .code("code1")
+                .name("name1")
+                .description("description1")
+                .maximumInWarehouse(10000)
+                .minimumInWarehouse(1000)
+                .maximumOnShelf(100)
+                .minimumOnShelf(10)
+                .build());
+        skuMapper.insert(SkuPO.builder()
+                .code("code2")
+                .name("name2")
+                .description("description2")
+                .maximumInWarehouse(20000)
+                .minimumInWarehouse(2000)
+                .maximumOnShelf(100)
+                .minimumOnShelf(10)
+                .build());
+        skuMapper.insert(SkuPO.builder()
+                .code("code3")
+                .name("name3")
+                .description("description3")
+                .maximumInWarehouse(50000)
+                .minimumInWarehouse(5000)
+                .maximumOnShelf(1000)
+                .minimumOnShelf(100)
+                .build());
     }
 }

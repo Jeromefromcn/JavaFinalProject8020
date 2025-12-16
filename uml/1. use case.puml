@@ -55,14 +55,14 @@ sta --> sts
     if warehouse goods still not enough
     then purchase failed.
     end note
-(refund goods) as refund
-    note right of refund
-    Refunded goods directly add back
-    to warehouse.
-    end note
+'(refund goods) as refund
+'    note right of refund
+'    Refunded goods directly add back
+'    to warehouse.
+'    end note
 
 cus --> buy
-cus --> refund
+'cus --> refund
 
 (auto Inventory inspection) as auin
     note right of auin
@@ -74,7 +74,7 @@ cus --> refund
 
 sch --> auin
 
-(stock replenishment) as stre
+(warehouse replenishment) as stre
     note right of stre
     Automatically contact the supplier to
     order the specific goods when
