@@ -3,7 +3,6 @@ package hk.edu.hkmu.jiang.javafinal.domain.inventory.service;
 import hk.edu.hkmu.jiang.javafinal.domain.inventory.aggregate.Inventory;
 import hk.edu.hkmu.jiang.javafinal.domain.shaired.enums.InventoryType;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
