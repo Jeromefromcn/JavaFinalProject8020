@@ -2,6 +2,7 @@ package hk.edu.hkmu.jiang.javafinal.interfaces.controller;
 
 import hk.edu.hkmu.jiang.javafinal.application.dto.SkuDTO;
 import hk.edu.hkmu.jiang.javafinal.application.service.SkuApplicationService;
+import hk.edu.hkmu.jiang.javafinal.common.annotation.Loggable;
 import hk.edu.hkmu.jiang.javafinal.interfaces.exception.BaseResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class SkuController {
     @NonNull
     private SkuApplicationService skuApplicationService;
 
+    @Loggable
     @GetMapping("/query_by_code")
     public BaseResponse<SkuDTO> queryByCode(String code) {
         SkuDTO skuDTO = skuApplicationService.queryBySkuCode(code);
@@ -28,6 +30,7 @@ public class SkuController {
                 .build();
     }
 
+    @Loggable
     @PostMapping("/save")
     public BaseResponse<SkuDTO> save(@RequestBody SkuDTO sku) {
         SkuDTO skuDTO = skuApplicationService.save(sku);

@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
 public class InventoryChangeRecordPO extends Basic {
     private Long inventoryId;
     private OperationType operationType;
-    private Long previousQuantity;
-    private Long newQuantity;
+    private Integer previousQuantity;
+    private Integer newQuantity;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
     private String notes;

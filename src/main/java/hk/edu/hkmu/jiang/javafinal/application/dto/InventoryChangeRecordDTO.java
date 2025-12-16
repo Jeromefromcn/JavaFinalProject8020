@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class InventoryChangeRecordDTO extends Basic {
     private Long inventoryId;
     private OperationType operationType;
-    private Long previousQuantity;
-    private Long newQuantity;
+    private Integer previousQuantity;
+    private Integer newQuantity;
     private LocalDateTime createdAt;
     private String notes;
 }

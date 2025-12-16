@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 public class InventoryPO extends Basic {
     private Long skuId;
     private InventoryType type;
-    private Long quantity;
+    private Integer quantity;
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
     @TableField(fill = FieldFill.INSERT_UPDATE)

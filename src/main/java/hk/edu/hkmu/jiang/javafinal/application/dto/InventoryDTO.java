@@ -17,7 +17,7 @@ import java.util.List;
 public class InventoryDTO extends Basic {
     private Long skuId;
     private InventoryType type;
-    private Long quantity;
+    private Integer quantity;
     private List<InventoryChangeRecordDTO> changeRecords;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;

@@ -17,12 +17,16 @@ import java.util.List;
 public class Inventory extends Basic {
     private Long skuId;
     private InventoryType type;
-    private Long quantity;
+    private Integer quantity;
     private List<InventoryChangeRecord> changeRecords;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     public void initQuantity() {
-        quantity = 0L;
+        this.quantity = 0;
+    }
+
+    public boolean isSufficient(Integer deduction) {
+        return this.quantity >= deduction;
     }
 }

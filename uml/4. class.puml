@@ -25,7 +25,7 @@ package Domain {
     class Inventory {
         private Long skuId;
         private InventoryType type;
-        private Long quantity;
+        private Integer quantity;
         private List<InventoryChangeRecord> changeRecords;
         private LocalDateTime createdAt;
         private LocalDateTime updatedAt;
@@ -33,8 +33,8 @@ package Domain {
     class InventoryChangeRecord {
         private Long inventoryId;
         private OperationType operationType;
-        private Long previousQuantity;
-        private Long newQuantity;
+        private Integer previousQuantity;
+        private Integer newQuantity;
         private LocalDateTime createdAt;
         private String notes;
     }
