@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 @Service
@@ -82,9 +83,12 @@ public class InventoryApplicationServiceImpl implements InventoryApplicationServ
             throw new DomainException(ErrorCode.INSUFFICIENT_INVENTORY.getCode(),
                     ErrorCode.INSUFFICIENT_INVENTORY.getMessage());
         }
-        // update warehouse inventories including records
+
+        // update shelf and warehouse inventories including records
         inventoryRepository.updateInventories(
-                deductedWarehouseInventoryAndShortageMap.keySet().stream().toList());
+                Stream.concat(deductedShelfInventoryAndShortageMap.keySet().stream(),
+                                deductedWarehouseInventoryAndShortageMap.keySet().stream())
+                        .toList());
         return true;
     }
 }
