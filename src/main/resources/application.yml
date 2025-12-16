@@ -26,6 +26,18 @@ spring:
     out-of-order: false
     clean-disabled: true
 
+  quartz:
+    job-store-type: memory
+    auto-startup: true
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: MyScheduler
+            instanceId: AUTO
+          threadPool:
+            threadCount: 10
+
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
@@ -42,11 +54,14 @@ logging:
   level:
     org.flywaydb.core.internal.sqlscript: DEBUG
     org.flywaydb: INFO
+    org.quartz: INFO
+    org.springframework.scheduling.quartz: DEBUG
 
 app:
   properties:
     topic:
       sku-created: skuCreated
+      replenishment: replenishment
 
 
 

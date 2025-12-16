@@ -1,6 +1,7 @@
 package hk.edu.hkmu.jiang.javafinal.Infrastructure.repository;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import hk.edu.hkmu.jiang.javafinal.Infrastructure.persistence.assembler.SkuPersistenceAssembler;
 import hk.edu.hkmu.jiang.javafinal.Infrastructure.persistence.mapper.SkuMapper;
 import hk.edu.hkmu.jiang.javafinal.Infrastructure.persistence.po.SkuPO;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Slf4j
 @Repository
@@ -42,5 +45,11 @@ public class SkuRepositoryImpl implements SkuRepository {
         SkuPO skuPO = skuPersistenceAssembler.assemblePo(sku);
         skuMapper.updateById(skuPO);
         return skuPersistenceAssembler.assembleAggregate(skuPO);
+    }
+
+    @Override
+    public List<Sku> queryAll() {
+        List<SkuPO> skuPOS = skuMapper.selectList(new QueryWrapper<>());
+        return skuPersistenceAssembler.assembleAggregateList(skuPOS);
     }
 }

@@ -110,10 +110,14 @@ participant OuterServiceProxy as proxy
 
 sch -> ser: run inventory inspection
 activate ser
-    ser -> db: query inventory and sku info
-    activate db
-    db --> ser: return info
-    deactivate db
+    ser -> rep: query inventory and sku info
+    activate rep
+        rep -> db: db op
+        activate db
+        db --> rep: return
+        deactivate db
+    rep --> ser: return
+    deactivate rep
     loop all inventory
         opt lower than threshold
             ser -> mb: send replenishment message\n(shelf or warehouse)
@@ -123,8 +127,6 @@ activate ser
         end
     end
     deactivate ser
-
-== Replenishment ==
 
 mb -> mc: push replenishment message
 activate mc
@@ -150,7 +152,9 @@ activate mc
 mc --> mb: ack
 deactivate mc
 
-staff -> ser: stock in
+== Replenishment ==
+
+staff -> ser: stock the warehouse
 note right
 after receiving the goods ordered from supplier
 end note

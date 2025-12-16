@@ -1,6 +1,6 @@
 package hk.edu.hkmu.jiang.javafinal.interfaces.exception;
 
-import hk.edu.hkmu.jiang.javafinal.domain.exception.DomainException;
+import hk.edu.hkmu.jiang.javafinal.domain.shaired.exception.DomainException;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.http.HttpStatus;

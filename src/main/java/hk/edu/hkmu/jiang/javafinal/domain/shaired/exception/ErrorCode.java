@@ -1,4 +1,4 @@
-package hk.edu.hkmu.jiang.javafinal.domain.exception;
+package hk.edu.hkmu.jiang.javafinal.domain.shaired.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,12 +1,12 @@
 package hk.edu.hkmu.jiang.javafinal.application.service.impl;
 
 import hk.edu.hkmu.jiang.javafinal.application.service.InventoryApplicationService;
-import hk.edu.hkmu.jiang.javafinal.domain.exception.DomainException;
-import hk.edu.hkmu.jiang.javafinal.domain.exception.ErrorCode;
 import hk.edu.hkmu.jiang.javafinal.domain.inventory.aggregate.Inventory;
 import hk.edu.hkmu.jiang.javafinal.domain.inventory.repository.InventoryRepository;
 import hk.edu.hkmu.jiang.javafinal.domain.inventory.service.InventoryDomainService;
 import hk.edu.hkmu.jiang.javafinal.domain.shaired.enums.InventoryType;
+import hk.edu.hkmu.jiang.javafinal.domain.shaired.exception.DomainException;
+import hk.edu.hkmu.jiang.javafinal.domain.shaired.exception.ErrorCode;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

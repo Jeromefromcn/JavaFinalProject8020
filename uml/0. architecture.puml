@@ -5,7 +5,7 @@ left to right direction
 package Interfaces {
     [REST API] as rest
     [Consumer] as con
-    [Worker] as wo
+    [Job] as job
 }
 
 package Application {
@@ -38,7 +38,7 @@ database "Redis" as redis{
 
 rest --> asa
 con --> asa
-wo --> asa
+job --> asa
 asi --> da
 asi --> dsa
 asi --> rea
