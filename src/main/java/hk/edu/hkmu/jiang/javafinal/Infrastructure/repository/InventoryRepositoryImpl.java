@@ -50,6 +50,7 @@ public class InventoryRepositoryImpl implements InventoryRepository {
         if (!CollectionUtils.isEmpty(inventory.getChangeRecords())) {
             List<InventoryChangeRecord> changeRecords = inventory.getChangeRecords();
             changeRecords.forEach(inventoryChangeRecord -> {
+                inventoryChangeRecord.setInventoryId(inventoryPO.getId());
                 InventoryChangeRecordPO recordPO =
                         inventoryChangeRecordPersistenceAssembler.assemblePo(inventoryChangeRecord);
                 inventoryChangeRecordMapper.insert(recordPO);
