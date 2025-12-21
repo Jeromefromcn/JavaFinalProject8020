@@ -27,9 +27,12 @@ CREATE TABLE inventory_change_record
 (
     id                BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     inventory_id      BIGINT      NOT NULL,
-    operation_type    VARCHAR(20) NOT NULL CHECK (operation_type IN ('INITIALIZATION', 'INBOUND', 'OUTBOUND')),
+    operation_type VARCHAR(20) NOT NULL CHECK (operation_type IN
+                                               ('INITIALIZATION',
+                                                'INBOUND', 'OUTBOUND')),
     previous_quantity INTEGER,
     new_quantity      INTEGER,
     created_at        TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     notes             VARCHAR(512)
 );
+
