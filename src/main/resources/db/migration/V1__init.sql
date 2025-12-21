@@ -11,7 +11,6 @@ CREATE TABLE sku
     created_at           TIMESTAMP             DEFAULT CURRENT_TIMESTAMP,
     updated_at           TIMESTAMP             DEFAULT CURRENT_TIMESTAMP
 );
-
 CREATE TABLE inventory
 (
     id         BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -22,7 +21,6 @@ CREATE TABLE inventory
     updated_at TIMESTAMP            DEFAULT CURRENT_TIMESTAMP,
     CONSTRAINT uk_inventory_sku_type UNIQUE (sku_id, type)
 );
-
 CREATE TABLE inventory_change_record
 (
     id                BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
