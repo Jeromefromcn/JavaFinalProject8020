@@ -1,0 +1,99 @@
+@startuml
+left to right direction
+
+actor "MessageConsumer" as mc
+actor "Scheduler" as sch
+actor "Customer" as cus
+actor "Staff" as sta
+
+(query sku) as query
+    note right of query
+    Query SKU information using its code.
+    end note
+(maintain sku) as maintain
+    note right of maintain
+    Create or modify SKU details,
+    which include attributes
+    such as Code, Name,
+    and maximum/minimum stock levels
+    for both warehouse and shelf.
+    After an sku is created,
+    a message is sent.
+    end note
+'(take stock) as tast
+'    note right of tast
+'    Query sku details from
+'    shelf or warehouse
+'    to check the stock
+'    end note
+(replenish warehouse) as sw
+    note right of sw
+    Receive and store goods from
+    suppliers in the warehouse inventory.
+    end note
+(replenish shelves) as sts
+    note right of sts
+    Move goods from the warehouse inventory
+    to the shelf inventory for sales.
+    end note
+
+sta --> query
+sta --> maintain
+'sta --> tast
+sta --> sw
+sta --> sts
+
+(purchase goods) as buy
+    note right of buy
+    If the shelf inventory is sufficient,
+    deduct the required quantity from it.
+    If the shelf inventory is insufficient
+    but the warehouse inventory is sufficient,
+    first deduct the available stock from
+    the shelf, then deduct the remaining
+    required quantity from the warehouse.
+    If the total inventory (shelf and warehouse)
+    is still insufficient, the purchase fails.
+    end note
+'(refund goods) as refund
+'    note right of refund
+'    Refunded goods directly add back
+'    to warehouse.
+'    end note
+
+cus --> buy
+'cus --> refund
+
+(auto Inventory inspection) as auin
+    note right of auin
+    An automated job runs on a defined schedule.
+     It sends a replenishment message
+     when the inventory level for an item falls
+     below a set threshold.
+    end note
+
+sch --> auin
+
+(warehouse replenishment) as stre
+    note right of stre
+    Automatically place an order with the supplier
+     for specific goods upon receiving a stock
+     replenishment message.
+    end note
+(shelf replenishment) as shre
+    note right of shre
+    Notify a staff member to move goods from
+    the warehouse to the shelf upon receiving
+    a shelf replenishment message.
+    end note
+(inventory initialization) as ii
+    note right of ii
+    Initialize the stock levels for both shelf
+    and warehouse inventories after receiving
+    the initialization message.
+    end note
+
+mc --> stre
+mc --> shre
+mc --> ii
+@enduml
